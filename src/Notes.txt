@@ -1,0 +1,3 @@
+playerReducer will contain
+1. the song dataset
+2. 
