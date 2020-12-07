@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
 
-function chillHop() {
+function songData() {
   return [
     {
       name: "Sleepover",
@@ -236,4 +236,4 @@ function chillHop() {
   ];
 }
 
-export default chillHop;
+export default songData;
