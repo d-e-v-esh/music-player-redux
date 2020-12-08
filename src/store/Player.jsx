@@ -6,8 +6,8 @@
 
 import songData from "../data";
 const initState = {
-  allSongs: songData(), // If I run this data function then it is just going to return us the array of objects containing the song data
-  currentSong: [songData()[0]],
+  allSongs: songData(),
+  currentSongId: [songData()[0].id],
   songPlayStatus: "PAUSED",
   isLibraryOpen: false,
   songInfo: [
