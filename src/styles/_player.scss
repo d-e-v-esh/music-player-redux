@@ -13,7 +13,7 @@
     // padding: 1rem 0rem;
     width: 100%;
     -webkit-appearance: none;
-    background: transparent;
+    background: black;
     cursor: pointer;
   }
   p {
@@ -58,7 +58,7 @@ input[type="range"]:focus {
   outline: none;
 }
 input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
+  // -webkit-appearance: none;
   height: 16px;
   width: 16px;
   // background: black;
