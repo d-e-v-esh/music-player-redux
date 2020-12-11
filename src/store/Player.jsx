@@ -36,7 +36,7 @@ const initState = {
   allSongs: songData(),
   currentSong: { ...songData()[0] },
   isPlaying: false,
-  isLibraryOpen: false,
+
   currentTime: 0,
   duration: 0,
   sliderTimer: 0,
