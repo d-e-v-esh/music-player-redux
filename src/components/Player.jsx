@@ -8,11 +8,16 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useSelector, useDispatch } from "react-redux";
 import { playAndPause, timerUpdate } from "../store/Player";
+import formatTime from "../utils/formatTime";
 
 const Player = () => {
+  // Redux
   const dispatch = useDispatch();
+  const { isPlaying, currentSong, currentTime, duration } = useSelector(
+    (state) => state.player
+  );
 
-  const { isPlaying, currentSong } = useSelector((state) => state.player);
+  // Audio
   const audioReference = useRef(null);
 
   // Event Handlers
@@ -30,22 +35,25 @@ const Player = () => {
   const timeUpdateHandler = (e) => {
     const current = e.target.currentTime;
     const duration = e.target.duration;
+    dispatch(timerUpdate(current, duration));
+  };
 
-    return current;
+  const dragHandler = (e) => {
+    // Here "e.target.value" contains the position of the slider
   };
 
   return (
     <div className="player">
       <div className="time-control">
-        <p>Start Time</p>
+        <p>{formatTime(currentTime)}</p>
         <input
           type="range"
           min={0}
-          // max={songInfo.duration}
-          // value={songInfo.currentTime}
-          // onChange={seek}
+          max={duration}
+          value={currentTime}
+          onChange={dragHandler}
         />
-        <p>End Time</p>
+        <p>{formatTime(duration)}</p>
       </div>
       <div className="play-control">
         <FontAwesomeIcon className="skip-back" size="2x" icon={faAngleLeft} />

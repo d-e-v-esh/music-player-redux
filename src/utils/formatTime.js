@@ -1,4 +1,4 @@
-export function formatTime(seconds) {
+export default function formatTime(seconds) {
   if (typeof seconds !== "number" || isNaN(seconds)) {
     return "0:00";
   }

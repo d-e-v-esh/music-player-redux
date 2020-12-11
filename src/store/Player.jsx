@@ -11,11 +11,14 @@ export const playAndPause = () => {
   };
 };
 
-export const timerUpdate = (current, duration) => {
-  return {
+export const timerUpdate = (current, duration) => (dispatch) => {
+  dispatch({
     type: PLAYER_TIMER_UPDATE,
-    payload: {},
-  };
+    payload: {
+      currentTime: current,
+      duration: duration,
+    },
+  });
 };
 
 // Player Redux State
@@ -24,10 +27,8 @@ const initState = {
   currentSong: { ...songData()[0] },
   isPlaying: false,
   isLibraryOpen: false,
-  songTimer: {
-    currentTime: 0,
-    duration: 0,
-  },
+  currentTime: 0,
+  duration: 0,
 };
 
 // ----------------------------Player Reducer-------------------------
@@ -42,10 +43,8 @@ export default function playerReducer(state = initState, action) {
     case PLAYER_TIMER_UPDATE:
       return {
         ...state,
-        songTimer: {
-          currentTime: action.payload.currentTime,
-          duration: action.payload.duration,
-        },
+        currentTime: action.payload.currentTime,
+        duration: action.payload.duration,
       };
 
     default:
