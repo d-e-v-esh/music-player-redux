@@ -7,7 +7,7 @@ import {
   faPause,
 } from "@fortawesome/free-solid-svg-icons";
 import { useSelector, useDispatch } from "react-redux";
-import { playAndPause, timerUpdate } from "../store/Player";
+import { playAndPause, timerUpdate, dragSliderSync } from "../store/Player";
 import formatTime from "../utils/formatTime";
 
 const Player = () => {
@@ -40,6 +40,11 @@ const Player = () => {
 
   const dragHandler = (e) => {
     // Here "e.target.value" contains the position of the slider
+
+    const currentSliderPosition = parseInt(e.target.value);
+    audioReference.current.currentTime = currentSliderPosition;
+    console.log(currentSliderPosition);
+    dispatch(dragSliderSync(currentSliderPosition));
   };
 
   return (

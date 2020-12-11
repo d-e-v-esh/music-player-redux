@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 
 const Song = () => {
   const { currentSong } = useSelector((state) => state.player);
-  console.log(currentSong);
+  // console.log(currentSong);
   return (
     <div className="song-container">
       <img src={currentSong.cover} alt="Song Cover" />

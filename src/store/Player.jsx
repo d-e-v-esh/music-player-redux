@@ -3,6 +3,7 @@ import songData from "../data";
 // Action Types
 const PLAY_AND_PAUSE = "playAndPause";
 const PLAYER_TIMER_UPDATE = "timerUpdate";
+const INPUT_SLIDER_UPDATE = "dragSliderSync";
 
 // Action Creators
 export const playAndPause = () => {
@@ -21,6 +22,15 @@ export const timerUpdate = (current, duration) => (dispatch) => {
   });
 };
 
+export const dragSliderSync = (dragTimer) => (dispatch) => {
+  dispatch({
+    type: INPUT_SLIDER_UPDATE,
+    payload: {
+      sliderTimer: dragTimer,
+    },
+  });
+};
+
 // Player Redux State
 const initState = {
   allSongs: songData(),
@@ -29,6 +39,7 @@ const initState = {
   isLibraryOpen: false,
   currentTime: 0,
   duration: 0,
+  sliderTimer: 0,
 };
 
 // ----------------------------Player Reducer-------------------------
@@ -45,6 +56,12 @@ export default function playerReducer(state = initState, action) {
         ...state,
         currentTime: action.payload.currentTime,
         duration: action.payload.duration,
+      };
+
+    case INPUT_SLIDER_UPDATE:
+      return {
+        ...state,
+        currentTime: action.payload.sliderTimer,
       };
 
     default:
