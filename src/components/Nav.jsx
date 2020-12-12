@@ -11,7 +11,6 @@ const Nav = () => {
 
   // Event Handlers
   const openLibraryHandler = () => {
-    // setLibraryStatus(!libraryStatus);
     dispatch(libraryToggle());
   };
 
