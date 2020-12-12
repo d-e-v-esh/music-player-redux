@@ -1,6 +1,6 @@
 import React from "react";
 import LibrarySong from "./LibrarySong";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 const Library = () => {
   const { allSongs, currentSong } = useSelector((state) => state.player);

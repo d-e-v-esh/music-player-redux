@@ -7,7 +7,12 @@ import {
   faPause,
 } from "@fortawesome/free-solid-svg-icons";
 import { useSelector, useDispatch } from "react-redux";
-import { playAndPause, timerUpdate, dragSliderSync } from "../store/Player";
+import {
+  playAndPause,
+  timerUpdate,
+  dragSliderSync,
+  skipBackOrForth,
+} from "../store/Player";
 import formatTime from "../utils/formatTime";
 
 const Player = () => {
@@ -30,7 +35,8 @@ const Player = () => {
     if (isPlaying) {
       audioReference.current.pause();
       dispatch(playAndPause());
-    } else {
+    }
+    if (!isPlaying) {
       audioReference.current.play();
       dispatch(playAndPause());
     }
@@ -54,10 +60,21 @@ const Player = () => {
   // Song Change
 
   const skipTrackHandler = (direction) => {
-    // If any of the song matches the current song then that is the current song on the list, give me the index of that and store it in the variable
+    // If any of the song matches the current song then that is the current song on the list, give me the index of that and store it in the variable.
+    // When we have the index, we can go forward or backward on conditions
     const currentSongIndex = allSongs.findIndex(
       (song) => song.id === currentSong.id
     );
+
+    if (direction === "forward") {
+      const nextSongIndex = (currentSongIndex + 1) % allSongs.length; // We do this to loop on the song list after the last index
+      dispatch(skipBackOrForth(nextSongIndex));
+    }
+    if (direction === "backward") {
+      const previousSongIndex =
+        currentSongIndex === 0 ? allSongs.length - 1 : currentSongIndex - 1; // Same as above but for the prev
+      dispatch(skipBackOrForth(previousSongIndex));
+    }
   };
 
   return (
@@ -78,7 +95,7 @@ const Player = () => {
           className="skip-back"
           size="2x"
           icon={faAngleLeft}
-          // onClick={() => skipTrackHandler(backward)}
+          onClick={() => skipTrackHandler("backward")}
         />
         <FontAwesomeIcon
           onClick={playSongHandler}
@@ -87,7 +104,7 @@ const Player = () => {
           icon={isPlaying ? faPause : faPlay}
         />
         <FontAwesomeIcon
-          // onClick={() => skipTrackHandler(forward)}
+          onClick={() => skipTrackHandler("forward")}
           className="skip-forward"
           size="2x"
           icon={faAngleRight}

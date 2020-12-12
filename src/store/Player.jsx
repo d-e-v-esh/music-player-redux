@@ -6,7 +6,7 @@ const PLAYER_TIMER_UPDATE = "timerUpdate";
 const INPUT_SLIDER_UPDATE = "dragSliderSync";
 const UPDATE_CURRENT_SONG = "setCurrentSong"; // To be used when song is selected form the library
 
-// const SKIP_FORWARD_OR_BACKWARD = "skipBackOrForth"; // To be used when we click on the next or prev button
+const SKIP_FORWARD_OR_BACKWARD = "skipBackOrForth"; // To be used when we click on the next or prev button
 
 // Action Creators
 export const playAndPause = () => {
@@ -43,12 +43,21 @@ export const setCurrentSong = (newSelectedSong) => (dispatch) => {
   });
 };
 
+export const skipBackOrForth = (songIndex) => (dispatch) => {
+  dispatch({
+    type: SKIP_FORWARD_OR_BACKWARD,
+    payload: {
+      newCurrentSongIndex: songIndex,
+    },
+  });
+};
+
 // Player Redux State
 const initState = {
   allSongs: songData(),
   currentSong: { ...songData()[0] },
   isPlaying: false,
-
+  newCurrentSongIndex: 0,
   newCurrentSongID: {},
   currentTime: 0,
   duration: 0,
@@ -83,6 +92,11 @@ export default function playerReducer(state = initState, action) {
         currentSong: action.payload.newCurrentSong,
       };
 
+    case SKIP_FORWARD_OR_BACKWARD:
+      return {
+        ...state,
+        currentSong: state.allSongs[action.payload.newCurrentSongIndex],
+      };
     default:
       return { ...state };
   }
