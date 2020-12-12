@@ -13,9 +13,13 @@ import formatTime from "../utils/formatTime";
 const Player = () => {
   // Redux
   const dispatch = useDispatch();
-  const { isPlaying, currentSong, currentTime, duration } = useSelector(
-    (state) => state.player
-  );
+  const {
+    isPlaying,
+    currentSong,
+    currentTime,
+    duration,
+    allSongs,
+  } = useSelector((state) => state.player);
 
   // Audio
   const audioReference = useRef(null);
@@ -43,8 +47,17 @@ const Player = () => {
 
     const currentSliderPosition = parseInt(e.target.value);
     audioReference.current.currentTime = currentSliderPosition;
-    console.log(currentSliderPosition);
+
     dispatch(dragSliderSync(currentSliderPosition));
+  };
+
+  // Song Change
+
+  const skipTrackHandler = (direction) => {
+    // If any of the song matches the current song then that is the current song on the list, give me the index of that and store it in the variable
+    const currentSongIndex = allSongs.findIndex(
+      (song) => song.id === currentSong.id
+    );
   };
 
   return (
@@ -54,14 +67,19 @@ const Player = () => {
         <input
           type="range"
           min={0}
-          max={duration}
+          max={duration || 0}
           value={currentTime}
           onChange={dragHandler}
         />
         <p>{formatTime(duration)}</p>
       </div>
       <div className="play-control">
-        <FontAwesomeIcon className="skip-back" size="2x" icon={faAngleLeft} />
+        <FontAwesomeIcon
+          className="skip-back"
+          size="2x"
+          icon={faAngleLeft}
+          // onClick={() => skipTrackHandler(backward)}
+        />
         <FontAwesomeIcon
           onClick={playSongHandler}
           className="play"
@@ -69,6 +87,7 @@ const Player = () => {
           icon={isPlaying ? faPause : faPlay}
         />
         <FontAwesomeIcon
+          // onClick={() => skipTrackHandler(forward)}
           className="skip-forward"
           size="2x"
           icon={faAngleRight}
@@ -77,7 +96,8 @@ const Player = () => {
         <audio
           ref={audioReference}
           src={currentSong.audio}
-          onTimeUpdate={timeUpdateHandler}></audio>
+          onTimeUpdate={timeUpdateHandler}
+          preload="auto"></audio>
       </div>
     </div>
   );

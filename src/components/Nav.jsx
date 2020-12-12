@@ -16,7 +16,7 @@ const Nav = () => {
 
   return (
     <nav>
-      <h1>Waves</h1>
+      <h1 className="logo">Waves</h1>
       <button
         className={isLibraryOpen ? "library-active" : ""}
         onClick={openLibraryHandler}>

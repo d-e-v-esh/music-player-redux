@@ -11,7 +11,11 @@ const Library = () => {
       <h2>Library</h2>
       <div className="library-songs">
         {allSongs.map((song) => (
-          <LibrarySong song={song} />
+          <LibrarySong
+            song={song}
+            isCurrent={song.id === currentSong.id}
+            key={song.id}
+          />
         ))}
       </div>
     </div>
