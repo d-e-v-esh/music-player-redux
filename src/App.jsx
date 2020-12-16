@@ -6,7 +6,7 @@ import Nav from "./components/Nav";
 import Library from "./components/Library";
 import { useIsFirstRender } from "./utils/useIsFirstRender";
 import { useSelector, useDispatch } from "react-redux";
-import { playAndPause } from "./store/Player";
+import { playSong } from "./store/Player";
 function App() {
   const dispatch = useDispatch();
 

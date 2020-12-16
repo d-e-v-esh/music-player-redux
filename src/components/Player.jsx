@@ -8,7 +8,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  playAndPause,
+  playSong,
+  pauseSong,
   timerUpdate,
   dragSliderSync,
   skipBackOrForth,
@@ -34,23 +35,26 @@ const Player = () => {
     // If song is playing the pause it otherwise play
     if (isPlaying) {
       audioReference.current.pause();
-      dispatch(playAndPause("true"));
+      dispatch(playSong());
     }
     if (!isPlaying) {
       audioReference.current.play();
-      dispatch(playAndPause("false"));
+
+      dispatch(pauseSong());
     }
   };
 
   const timeUpdateHandler = (e) => {
     const current = e.target.currentTime;
     const duration = e.target.duration;
-    dispatch(timerUpdate(current, duration));
+    dispatch(timerUpdate({ current, duration }));
   };
 
   const dragHandler = (e) => {
     // Here "e.target.value" contains the position of the slider
+    console.log(e.target.value);
 
+    // console.log(currentSliderPosition);
     const currentSliderPosition = parseInt(e.target.value);
     audioReference.current.currentTime = currentSliderPosition;
 
@@ -69,20 +73,20 @@ const Player = () => {
     if (direction === "forward") {
       const nextSongIndex = (currentSongIndex + 1) % allSongs.length; // We do this to loop on the song list after the last index
       dispatch(skipBackOrForth(nextSongIndex));
-      audioReference.current.play();
+      // audioReference.current.play();
     }
     if (direction === "backward") {
       const previousSongIndex =
         currentSongIndex === 0 ? allSongs.length - 1 : currentSongIndex - 1; // Same as above but for the prev
       dispatch(skipBackOrForth(previousSongIndex));
-      audioReference.current.play();
+      // audioReference.current.play();
     }
   };
 
   useEffect(() => {
     if (isPlaying && audioReference.current?.paused) {
       audioReference.current.play();
-      dispatch(playAndPause("true"));
+      dispatch(playSong());
     }
   }, [currentSong]);
 
