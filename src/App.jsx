@@ -11,17 +11,10 @@ function App() {
   const dispatch = useDispatch();
 
   const isFirstRender = useIsFirstRender();
-  const { isLibraryOpen } = useSelector((state) => state.library);
-  const { isPlaying, currentSong } = useSelector((state) => state.player);
+  const { isLibraryOpen } = useSelector((state) => state);
+  // const { isPlaying, currentSong } = useSelector((state) => state.player);
 
-  // Set status to PLAYING whenever the current song changes
-  useEffect(() => {
-    if (!isFirstRender) {
-      // setStatus("PLAYING");
-      dispatch(playAndPause());
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentSong]);
+  // const isLibraryOpen = true;
 
   return (
     <div className={`App ${isLibraryOpen ? "library-active" : ""}`}>

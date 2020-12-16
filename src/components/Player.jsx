@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPlay,
@@ -24,7 +24,7 @@ const Player = () => {
     currentTime,
     duration,
     allSongs,
-  } = useSelector((state) => state.player);
+  } = useSelector((state) => state);
 
   // Audio
   const audioReference = useRef(null);
@@ -34,11 +34,11 @@ const Player = () => {
     // If song is playing the pause it otherwise play
     if (isPlaying) {
       audioReference.current.pause();
-      dispatch(playAndPause());
+      dispatch(playAndPause("true"));
     }
     if (!isPlaying) {
       audioReference.current.play();
-      dispatch(playAndPause());
+      dispatch(playAndPause("false"));
     }
   };
 
@@ -65,17 +65,26 @@ const Player = () => {
     const currentSongIndex = allSongs.findIndex(
       (song) => song.id === currentSong.id
     );
-
+    // TODO: Change here -------------------------------------------------------
     if (direction === "forward") {
       const nextSongIndex = (currentSongIndex + 1) % allSongs.length; // We do this to loop on the song list after the last index
       dispatch(skipBackOrForth(nextSongIndex));
+      audioReference.current.play();
     }
     if (direction === "backward") {
       const previousSongIndex =
         currentSongIndex === 0 ? allSongs.length - 1 : currentSongIndex - 1; // Same as above but for the prev
       dispatch(skipBackOrForth(previousSongIndex));
+      audioReference.current.play();
     }
   };
+
+  useEffect(() => {
+    if (isPlaying && audioReference.current?.paused) {
+      audioReference.current.play();
+      dispatch(playAndPause("true"));
+    }
+  }, [currentSong]);
 
   return (
     <div className="player">

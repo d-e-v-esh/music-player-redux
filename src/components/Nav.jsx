@@ -2,12 +2,12 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMusic } from "@fortawesome/free-solid-svg-icons";
 import { useSelector, useDispatch } from "react-redux";
-import { libraryToggle } from "../store/Library";
+import { libraryToggle } from "../store/Player";
 
 const Nav = () => {
   // Redux
   const dispatch = useDispatch();
-  const { isLibraryOpen } = useSelector((state) => state.library);
+  const { isLibraryOpen } = useSelector((state) => state);
 
   // Event Handlers
   const openLibraryHandler = () => {

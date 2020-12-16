@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { setCurrentSong } from "../store/Player";
+import { updateCurrentSong } from "../store/Player";
 
 const LibrarySong = ({ song, isCurrent }) => {
   const dispatch = useDispatch();
@@ -8,7 +8,7 @@ const LibrarySong = ({ song, isCurrent }) => {
   // const { currentSong, allSongs } = useSelector((state) => state.player);
   const songSelectHandler = () => {
     // Space where I messed up earlier
-    dispatch(setCurrentSong(song));
+    dispatch(updateCurrentSong(song));
   };
 
   return (

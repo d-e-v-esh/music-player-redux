@@ -3,8 +3,9 @@ import LibrarySong from "./LibrarySong";
 import { useSelector } from "react-redux";
 
 const Library = () => {
-  const { allSongs, currentSong } = useSelector((state) => state.player);
-  const { isLibraryOpen } = useSelector((state) => state.library);
+  const { allSongs, currentSong, isLibraryOpen } = useSelector(
+    (state) => state
+  );
 
   return (
     <div className={`library ${isLibraryOpen ? "active-library" : " "}`}>
