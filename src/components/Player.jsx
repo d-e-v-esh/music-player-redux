@@ -35,12 +35,12 @@ const Player = () => {
     // If song is playing the pause it otherwise play
     if (isPlaying) {
       audioReference.current.pause();
-      dispatch(playSong());
+      dispatch(pauseSong());
     }
     if (!isPlaying) {
       audioReference.current.play();
 
-      dispatch(pauseSong());
+      dispatch(playSong());
     }
   };
 
@@ -69,7 +69,7 @@ const Player = () => {
     const currentSongIndex = allSongs.findIndex(
       (song) => song.id === currentSong.id
     );
-    // TODO: Change here -------------------------------------------------------
+
     if (direction === "forward") {
       const nextSongIndex = (currentSongIndex + 1) % allSongs.length; // We do this to loop on the song list after the last index
       dispatch(skipBackOrForth(nextSongIndex));

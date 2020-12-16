@@ -42,7 +42,7 @@ const playerSlice = createSlice({
       // action.payload returns the index of the new song
       state.currentSong = state.allSongs[action.payload];
     },
-    libraryToggle(state, action) {
+    libraryToggle(state) {
       state.isLibraryOpen = !state.isLibraryOpen;
     },
   },
