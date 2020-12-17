@@ -1,18 +1,22 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateCurrentSong } from "../store/Player";
 
 const LibrarySong = ({ song, isCurrent }) => {
   const dispatch = useDispatch();
+  const { currentSong } = useSelector((state) => state);
 
-  // const { currentSong, allSongs } = useSelector((state) => state.player);
   const songSelectHandler = () => {
     // Space where I messed up earlier
     dispatch(updateCurrentSong(song));
   };
 
   return (
-    <div onClick={songSelectHandler} className="library-song">
+    <div
+      onClick={songSelectHandler}
+      className={`library-song ${isCurrent ? "selected" : ""}`}
+      // className={`library-song ${"selected"}`}
+    >
       <img src={song.cover} alt={song.name} />
 
       <div className="song-description">

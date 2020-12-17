@@ -3,16 +3,6 @@ import { v4 as uuidv4 } from "uuid";
 function songData() {
   return [
     {
-      name: "Sleepover",
-      cover:
-        "https://chillhop.com/wp-content/uploads/2020/09/09fb436604242df99f84b9f359acb046e40d2e9e-1024x1024.jpg",
-      artist: "Nymano, JK the Sage",
-      audio: "https://mp3.chillhop.com/serve.php/?mp3=10130",
-      color: ["#595381", "#A36F86"],
-      id: uuidv4(),
-      active: true,
-    },
-    {
       name: "Cabin in the Woods",
       cover:
         "https://chillhop.com/wp-content/uploads/2020/09/2899f7cc22ab12e17d0119819aac3ca9dbab46e6-1024x1024.jpg",
@@ -29,6 +19,16 @@ function songData() {
       artist: "Philanthrope",
       audio: "https://mp3.chillhop.com/serve.php/?mp3=10243",
       color: ["#EC6431", "#74523C"],
+      id: uuidv4(),
+      active: false,
+    },
+    {
+      name: "Sleepover",
+      cover:
+        "https://chillhop.com/wp-content/uploads/2020/09/09fb436604242df99f84b9f359acb046e40d2e9e-1024x1024.jpg",
+      artist: "Nymano, JK the Sage",
+      audio: "https://mp3.chillhop.com/serve.php/?mp3=10130",
+      color: ["#595381", "#A36F86"],
       id: uuidv4(),
       active: false,
     },

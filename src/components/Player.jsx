@@ -15,6 +15,7 @@ import {
   skipBackOrForth,
 } from "../store/Player";
 import formatTime from "../utils/formatTime";
+import { useIsFirstRender } from "../utils/useIsFirstRender";
 
 const Player = () => {
   // Redux
@@ -29,6 +30,21 @@ const Player = () => {
 
   // Audio
   const audioReference = useRef(null);
+  const isFirstRender = useIsFirstRender();
+  // Set status to PLAYING whenever the current song changes
+
+  // This loads once on startup and sets the 1st song on the player
+  useEffect(() => {
+    dispatch(skipBackOrForth(0));
+    dispatch(pauseSong());
+  }, []);
+
+  useEffect(() => {
+    if (!isFirstRender) {
+      dispatch(playSong());
+      audioReference.current.play();
+    }
+  }, [currentSong.id]);
 
   // Event Handlers
   const playSongHandler = () => {
@@ -64,23 +80,30 @@ const Player = () => {
   // Song Change
 
   const skipTrackHandler = (direction) => {
-    // If any of the song matches the current song then that is the current song on the list, give me the index of that and store it in the variable.
-    // When we have the index, we can go forward or backward on conditions
-    const currentSongIndex = allSongs.findIndex(
-      (song) => song.id === currentSong.id
-    );
+    const currentSongIndex = allSongs.indexOf(currentSong);
 
     if (direction === "forward") {
-      const nextSongIndex = (currentSongIndex + 1) % allSongs.length; // We do this to loop on the song list after the last index
+      const nextSongIndex =
+        currentSongIndex === allSongs.length - 1 ? 0 : currentSongIndex + 1; // We do this to loop on the song list after the last index
       dispatch(skipBackOrForth(nextSongIndex));
       // audioReference.current.play();
     }
     if (direction === "backward") {
+      if ((currentSongIndex - 1) % allSongs.length === -1) {
+        dispatch(skipBackOrForth(allSongs.length - 1));
+        return;
+      }
+
       const previousSongIndex =
-        currentSongIndex === 0 ? allSongs.length - 1 : currentSongIndex - 1; // Same as above but for the prev
+        currentSongIndex < 0 ? allSongs.length - 1 : currentSongIndex - 1; // Same as above but for the prev
       dispatch(skipBackOrForth(previousSongIndex));
-      // audioReference.current.play();
     }
+  };
+
+  const animationPercentage = Math.round((currentTime / duration) * 100);
+  console.log(animationPercentage);
+  const trackAnim = {
+    transform: `translateX(${animationPercentage}%)`,
   };
 
   useEffect(() => {
@@ -94,13 +117,20 @@ const Player = () => {
     <div className="player">
       <div className="time-control">
         <p>{formatTime(currentTime)}</p>
-        <input
-          type="range"
-          min={0}
-          max={duration || 0}
-          value={currentTime}
-          onChange={dragHandler}
-        />
+        <div
+          style={{
+            background: `linear-gradient(to right, ${currentSong.color[0]},${currentSong.color[1]})`,
+          }}
+          className="track">
+          <input
+            type="range"
+            min={0}
+            max={duration || 0}
+            value={currentTime}
+            onChange={dragHandler}
+          />
+          <div className="animate-track" style={trackAnim}></div>
+        </div>
         <p>{formatTime(duration)}</p>
       </div>
       <div className="play-control">

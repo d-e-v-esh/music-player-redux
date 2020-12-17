@@ -4,17 +4,13 @@ import Song from "./components/Song";
 import "./styles/app.scss";
 import Nav from "./components/Nav";
 import Library from "./components/Library";
-import { useIsFirstRender } from "./utils/useIsFirstRender";
 import { useSelector, useDispatch } from "react-redux";
 import { playSong } from "./store/Player";
+
 function App() {
   const dispatch = useDispatch();
 
-  const isFirstRender = useIsFirstRender();
-  const { isLibraryOpen } = useSelector((state) => state);
-  // const { isPlaying, currentSong } = useSelector((state) => state.player);
-
-  // const isLibraryOpen = true;
+  const { isLibraryOpen, currentSong } = useSelector((state) => state);
 
   return (
     <div className={`App ${isLibraryOpen ? "library-active" : ""}`}>

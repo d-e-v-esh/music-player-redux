@@ -1,19 +1,35 @@
 .song-container {
   min-height: 60vh;
-
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  img {
-    width: 28%;
-    border-radius: 50%;
-  }
+
   h2 {
     padding: 1rem 1rem 1rem 1rem;
   }
   h3 {
     font-size: 1rem;
+  }
+
+  img {
+    border-radius: 50%;
+    width: 28%;
+    animation: spin linear 5s infinite forwards;
+    animation-play-state: paused;
+    &.spinning {
+      animation-play-state: running;
+    }
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
   }
 }
 

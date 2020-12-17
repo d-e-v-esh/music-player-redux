@@ -3,7 +3,7 @@ import songData from "../data";
 import { createSlice } from "@reduxjs/toolkit";
 const initState = {
   allSongs: songData(),
-  currentSong: { ...songData()[4] },
+  currentSong: { ...songData()[0] },
   isPlaying: false,
   isLibraryOpen: false,
 
@@ -26,8 +26,6 @@ const playerSlice = createSlice({
       }
     },
     timerUpdate(state, action) {
-      // console.log(action.payload.currentTime);
-      // console.log(action.payload.duration);
       state.currentTime = action.payload.current;
       state.duration = action.payload.duration;
     },
