@@ -1,9 +1,10 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPlay,
   faAngleLeft,
   faAngleRight,
+  faVolumeDown,
   faPause,
 } from "@fortawesome/free-solid-svg-icons";
 import { useSelector, useDispatch } from "react-redux";
@@ -18,6 +19,8 @@ import formatTime from "../utils/formatTime";
 import { useIsFirstRender } from "../utils/useIsFirstRender";
 
 const Player = () => {
+  const [activeVolume, setActiveVolume] = useState(false);
+
   // Redux
   const dispatch = useDispatch();
   const {
@@ -77,6 +80,10 @@ const Player = () => {
     dispatch(dragSliderSync(currentSliderPosition));
   };
 
+  const changeVolume = (e) => {
+    let value = e.target.value;
+    audioReference.current.volume = value;
+  };
   // Song Change
 
   const skipTrackHandler = (direction) => {
@@ -158,6 +165,21 @@ const Player = () => {
           src={currentSong.audio}
           onTimeUpdate={timeUpdateHandler}
           preload="auto"></audio>
+
+        <FontAwesomeIcon
+          onClick={() => setActiveVolume(!activeVolume)}
+          icon={faVolumeDown}
+        />
+        {activeVolume && (
+          <input
+            onChange={changeVolume}
+            value={20}
+            max="1"
+            min="0"
+            step="0.01"
+            type="range"
+          />
+        )}
       </div>
     </div>
   );
