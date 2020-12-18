@@ -21,6 +21,7 @@ import { useIsFirstRender } from "../utils/useIsFirstRender";
 const Player = () => {
   const [activeVolume, setActiveVolume] = useState(false);
 
+  // console.log(activeVolume);
   // Redux
   const dispatch = useDispatch();
   const {
@@ -81,11 +82,12 @@ const Player = () => {
   };
 
   const changeVolume = (e) => {
-    let value = e.target.value;
-    audioReference.current.volume = value;
+    const volumeValue = e.target.value;
+    audioReference.current.volume = volumeValue;
+    // console.log(volumeValue);
   };
-  // Song Change
 
+  // Song Change
   const skipTrackHandler = (direction) => {
     const currentSongIndex = allSongs.indexOf(currentSong);
 
@@ -108,7 +110,7 @@ const Player = () => {
   };
 
   const animationPercentage = Math.round((currentTime / duration) * 100);
-  console.log(animationPercentage);
+  // console.log(animationPercentage);
   const trackAnim = {
     transform: `translateX(${animationPercentage}%)`,
   };
@@ -172,8 +174,9 @@ const Player = () => {
         />
         {activeVolume && (
           <input
+            id="volume"
             onChange={changeVolume}
-            value={20}
+            value={audioReference.current.volume}
             max="1"
             min="0"
             step="0.01"

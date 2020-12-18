@@ -62,9 +62,31 @@ input[type="range"]::-webkit-slider-thumb {
   width: 16px;
 }
 
+// #volume {
+//   writing-mode: bt-lr;
+//   -webkit-appearance: slider-vertical;
+// }
+
+@media screen and (max-width: 900px) {
+  .time-control {
+    width: 75%;
+  }
+  .play-control {
+    width: 70%;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .time-control {
     width: 90%;
+  }
+  .play-control {
+    width: 80%;
+  }
+}
+@media screen and (max-width: 300px) {
+  .time-control {
+    width: 100%;
   }
   .play-control {
     width: 80%;

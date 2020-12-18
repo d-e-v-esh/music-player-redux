@@ -32,8 +32,22 @@
     transform: rotate(360deg);
   }
 }
+@media screen and (max-width: 900px) {
+  .song-container {
+    img {
+      width: 50%;
+    }
+  }
+}
+@media screen and (max-width: 720px) {
+  .song-container {
+    img {
+      width: 65%;
+    }
+  }
+}
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 400px) {
   .song-container {
     img {
       width: 80%;
