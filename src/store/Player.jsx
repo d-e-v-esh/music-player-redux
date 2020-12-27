@@ -1,7 +1,8 @@
 import songData from "../data";
 
 import { createSlice } from "@reduxjs/toolkit";
-const initState = {
+
+const initialState = {
   allSongs: songData(),
   currentSong: { ...songData()[0] },
   isPlaying: false,
@@ -13,7 +14,7 @@ const initState = {
 
 const playerSlice = createSlice({
   name: "player",
-  initialState: initState,
+  initialState,
   reducers: {
     playSong(state) {
       if (!state.isPlaying) {
